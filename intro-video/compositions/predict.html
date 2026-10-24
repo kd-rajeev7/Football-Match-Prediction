@@ -1,0 +1,218 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+    #predict-glow {
+      position: absolute;
+      left: 260px;
+      top: -260px;
+      width: 1400px;
+      height: 1400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(30, 77, 58, 0.55) 0%, rgba(6, 18, 31, 0) 62%);
+    }
+    #predict-cam {
+      position: absolute;
+      inset: 0;
+    }
+    #predict-tag {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 70px;
+      text-align: center;
+    }
+    #predict-tag span {
+      display: inline-block;
+      padding: 8px 22px;
+      border: 3px dashed rgba(244, 247, 242, 0.55);
+      border-radius: 999px;
+      font-size: 28px;
+      color: rgba(244, 247, 242, 0.8);
+      letter-spacing: 0.02em;
+    }
+    #predict-card {
+      position: absolute;
+      left: 310px;
+      top: 150px;
+      width: 1300px;
+      height: 780px;
+      border-radius: 40px;
+      background: #0d2236;
+      border: 3px solid #1d3a55;
+      padding: 48px 64px;
+      color: var(--color-ink);
+    }
+    #predict-kick {
+      font-size: 30px;
+      color: #8fa6bd;
+      text-align: center;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    #predict-teams {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 12px;
+      font-size: 64px;
+      font-weight: 700;
+    }
+    #predict-vs {
+      font-family: var(--font-display);
+      font-size: 56px;
+      font-weight: 400;
+      color: var(--color-accent);
+    }
+    .predict-row {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      margin-top: 44px;
+    }
+    .predict-label {
+      width: 230px;
+      font-size: 36px;
+      font-weight: 600;
+    }
+    .predict-track {
+      position: relative;
+      flex: 1;
+      height: 40px;
+      border-radius: 20px;
+      background: #1a3349;
+      overflow: hidden;
+    }
+    .predict-fill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 20px;
+      background: #5f7d99;
+      transform-origin: left center;
+    }
+    #predict-fill-home {
+      background: var(--color-accent);
+    }
+    .predict-num {
+      width: 150px;
+      text-align: right;
+      font-family: var(--font-display);
+      font-size: 72px;
+      line-height: 1;
+    }
+    #predict-result-wrap {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 52px;
+      text-align: center;
+    }
+    #predict-result {
+      display: inline-block;
+      padding: 18px 48px;
+      border-radius: 999px;
+      background: var(--color-accent);
+      color: var(--color-ground);
+      font-size: 44px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+  </style>
+  <div id="root" data-composition-id="predict" data-width="1920" data-height="1080">
+    <div id="predict-glow" data-layout-ignore></div>
+    <div id="predict-cam">
+      <div id="predict-tag"><span>Placeholder — swap in your real prediction screen</span></div>
+      <div id="predict-card">
+        <div id="predict-kick">Tonight · 20:00</div>
+        <div id="predict-teams">
+          <span id="predict-home" data-var-text="home-team">Home FC</span>
+          <span id="predict-vs">VS</span>
+          <span id="predict-away" data-var-text="away-team">Away United</span>
+        </div>
+        <div id="predict-row-home" class="predict-row">
+          <div class="predict-label">Home win</div>
+          <div class="predict-track"><div id="predict-fill-home" class="predict-fill"></div></div>
+          <div id="predict-num-home" class="predict-num">0%</div>
+        </div>
+        <div id="predict-row-draw" class="predict-row">
+          <div class="predict-label">Draw</div>
+          <div class="predict-track"><div id="predict-fill-draw" class="predict-fill"></div></div>
+          <div id="predict-num-draw" class="predict-num">0%</div>
+        </div>
+        <div id="predict-row-away" class="predict-row">
+          <div class="predict-label">Away win</div>
+          <div class="predict-track"><div id="predict-fill-away" class="predict-fill"></div></div>
+          <div id="predict-num-away" class="predict-num">0%</div>
+        </div>
+        <div id="predict-result-wrap">
+          <div id="predict-result"><span id="predict-result-text" data-var-text="result-line">Prediction: Home win</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const vars = (window.__hyperframes && window.__hyperframes.getVariables && window.__hyperframes.getVariables()) || {};
+    const pct = {
+      home: Number(vars["home-pct"] ?? 58),
+      draw: Number(vars["draw-pct"] ?? 24),
+      away: Number(vars["away-pct"] ?? 18),
+    };
+
+    const tl = gsap.timeline({ paused: true });
+
+    // Arrives through the centre circle: slightly large and soft, then settles.
+    tl.fromTo("#predict-card", { opacity: 0, scale: 1.18, filter: "blur(12px)" },
+      { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.6, ease: "expo.out" }, 0)
+      .fromTo("#predict-glow", { opacity: 0 }, { opacity: 1, duration: 0.8, ease: "power2.out" }, 0)
+      .fromTo("#predict-tag", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 0.35);
+
+    // Camera pushes in on the odds.
+    tl.fromTo("#predict-cam", { scale: 1, y: 0 },
+      { scale: 1.32, y: -60, duration: 0.6, ease: "power2.inOut", transformOrigin: "50% 55%" }, 0.9);
+
+    // Bars fill and the numbers count up with them.
+    const rows = {
+      home: ["#predict-fill-home", "#predict-num-home"],
+      draw: ["#predict-fill-draw", "#predict-num-draw"],
+      away: ["#predict-fill-away", "#predict-num-away"],
+    };
+    ["home", "draw", "away"].forEach((k, i) => {
+      const at = 1.5 + i * 0.15;
+      const counter = { v: 0 };
+      const num = document.querySelector(rows[k][1]);
+      tl.fromTo(rows[k][0], { scaleX: 0 }, { scaleX: pct[k] / 100, duration: 1.8, ease: "power2.out" }, at)
+        .fromTo(counter, { v: 0 }, {
+          v: pct[k], duration: 1.8, ease: "power2.out",
+          onUpdate: () => {
+            num.textContent = Math.round(counter.v) + "%";
+          },
+        }, at);
+    });
+
+    // The favourite lights up; the others step back.
+    tl.to(["#predict-row-draw", "#predict-row-away"], { opacity: 0.4, duration: 0.3, ease: "power2.out" }, 3.6)
+      .fromTo("#predict-num-home", { color: "#f4f7f2" }, { color: "#c6ff3d", duration: 0.3, ease: "power2.out" }, 3.6);
+
+    // Pull back and the verdict morphs open.
+    tl.to("#predict-cam", { scale: 1, y: 0, duration: 0.5, ease: "power2.inOut" }, 3.95)
+      .fromTo("#predict-result", { scaleX: 0.12, opacity: 0, filter: "blur(12px)" },
+        { scaleX: 1, opacity: 1, filter: "blur(0px)", duration: 0.35, ease: "power3.out" }, 4.35)
+      .fromTo("#predict-result-text", { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "power2.out" }, 4.55);
+
+    // The verdict becomes the world: the pill floods the frame.
+    tl.to("#predict-result-text", { opacity: 0, duration: 0.12, ease: "power2.in" }, 6.05)
+      .to(["#predict-card > :not(#predict-result-wrap)", "#predict-tag", "#predict-glow"],
+        { opacity: 0, filter: "blur(15px)", duration: 0.3, ease: "power2.in" }, 6.1)
+      .to("#predict-card", { backgroundColor: "rgba(13,34,54,0)", borderColor: "rgba(29,58,85,0)", duration: 0.3, ease: "power2.in" }, 6.1)
+      .to("#predict-result", { scale: 40, borderRadius: 0, duration: 0.65, ease: "power2.inOut" }, 6.15);
+
+    window.__timelines["predict"] = tl;
+  </script>
+</template>

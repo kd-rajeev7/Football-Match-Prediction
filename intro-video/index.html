@@ -1,0 +1,108 @@
+<!doctype html>
+<html
+  lang="en"
+  data-composition-variables='[
+    {"id":"color-ground","type":"color","label":"Background","default":"#06121F"},
+    {"id":"color-pitch","type":"color","label":"Pitch lines","default":"#1E4D3A"},
+    {"id":"color-ink","type":"color","label":"Text","default":"#F4F7F2"},
+    {"id":"color-accent","type":"color","label":"Accent","default":"#C6FF3D"},
+    {"id":"hook-line","type":"string","label":"Opening question","default":"Who wins tonight?"},
+    {"id":"home-team","type":"string","label":"Home team","default":"Home FC"},
+    {"id":"away-team","type":"string","label":"Away team","default":"Away United"},
+    {"id":"home-pct","type":"number","label":"Home win %","default":58,"min":0,"max":100,"step":1},
+    {"id":"draw-pct","type":"number","label":"Draw %","default":24,"min":0,"max":100,"step":1},
+    {"id":"away-pct","type":"number","label":"Away win %","default":18,"min":0,"max":100,"step":1},
+    {"id":"result-line","type":"string","label":"Predicted result","default":"Prediction: Home win"},
+    {"id":"app-name","type":"string","label":"App name","default":"Your App Name"},
+    {"id":"tagline","type":"string","label":"Tagline","default":"Know the score before kick-off."},
+    {"id":"cta","type":"string","label":"Call to action","default":"Download now"}
+  ]'
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      :root {
+        --color-ground: #06121f;
+        --color-pitch: #1e4d3a;
+        --color-ink: #f4f7f2;
+        --color-accent: #c6ff3d;
+        --font-display: "League Gothic";
+        --font-ui: "Outfit";
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: var(--color-ground);
+      }
+      #root {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        font-family: var(--font-ui);
+      }
+      #ground {
+        position: absolute;
+        inset: 0;
+        background: var(--color-ground);
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="15"
+      data-width="1920"
+      data-height="1080"
+    >
+      <div id="ground"></div>
+      <div
+        id="hook"
+        data-composition-id="hook"
+        data-composition-src="compositions/hook.html"
+        data-start="0"
+        data-duration="3.4"
+        data-track-index="1"
+        data-track-kind="graphics"
+        data-width="1920"
+        data-height="1080"
+      ></div>
+      <div
+        id="predict"
+        data-composition-id="predict"
+        data-composition-src="compositions/predict.html"
+        data-start="3.4"
+        data-duration="6.9"
+        data-track-index="1"
+        data-track-kind="graphics"
+        data-width="1920"
+        data-height="1080"
+      ></div>
+      <div
+        id="endcard"
+        data-composition-id="endcard"
+        data-composition-src="compositions/endcard.html"
+        data-start="10.3"
+        data-duration="4.7"
+        data-track-index="1"
+        data-track-kind="graphics"
+        data-width="1920"
+        data-height="1080"
+      ></div>
+    </div>
+    <script>
+      window.__timelines["main"] = gsap.timeline({ paused: true });
+    </script>
+  </body>
+</html>

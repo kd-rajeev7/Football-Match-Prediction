@@ -1,0 +1,121 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+    #end-ground {
+      position: absolute;
+      inset: 0;
+      background: var(--color-accent);
+    }
+    #end-lockup {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+    }
+    #end-mark {
+      position: relative;
+      width: 190px;
+      height: 190px;
+      border-radius: 50%;
+      border: 5px dashed var(--color-ground);
+      overflow: hidden;
+    }
+    #end-mark-fill {
+      position: absolute;
+      inset: 0;
+      background: var(--color-ground);
+    }
+    #end-mark-label {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 56px;
+      color: var(--color-accent);
+    }
+    #end-name {
+      font-family: var(--font-display);
+      font-size: 170px;
+      line-height: 1;
+      text-transform: uppercase;
+      color: var(--color-ground);
+      white-space: nowrap;
+    }
+    #end-tagline {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 560px;
+      text-align: center;
+      font-size: 56px;
+      font-weight: 500;
+      color: var(--color-ground);
+    }
+    #end-cta-wrap {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 700px;
+      text-align: center;
+    }
+    #end-cta {
+      display: inline-block;
+      padding: 24px 64px;
+      border-radius: 999px;
+      background: var(--color-ground);
+      color: var(--color-accent);
+      font-size: 48px;
+      font-weight: 700;
+    }
+    #end-note {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 880px;
+      text-align: center;
+      font-size: 28px;
+      color: rgba(6, 18, 31, 0.7);
+    }
+  </style>
+  <div id="root" data-composition-id="endcard" data-width="1920" data-height="1080">
+    <div id="end-ground"></div>
+    <div id="end-lockup">
+      <div id="end-mark">
+        <div id="end-mark-fill"></div>
+        <div id="end-mark-label">LOGO</div>
+      </div>
+      <div id="end-name" data-var-text="app-name">Your App Name</div>
+    </div>
+    <div id="end-tagline" data-var-text="tagline">Know the score before kick-off.</div>
+    <div id="end-cta-wrap"><div id="end-cta" data-var-text="cta">Download now</div></div>
+    <div id="end-note">Placeholder logo and name — swap in your own</div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+
+    // The mark drops in with a premium spring, then a fill rises through it.
+    tl.fromTo("#end-mark", { y: -260, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: "back.out(1.4)" }, 0.1)
+      .fromTo("#end-mark-fill", { clipPath: "inset(100% 0 0 0)" }, { clipPath: "inset(0% 0 0 0)", duration: 0.45, ease: "power2.inOut" }, 0.6)
+      .fromTo("#end-mark-label", { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "power2.out" }, 0.95);
+
+    // Wordmark wipes in beside it.
+    tl.fromTo("#end-name", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.5, ease: "power3.out" }, 0.85);
+
+    // Tagline, then the call to action.
+    tl.fromTo("#end-tagline", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 1.4)
+      .fromTo("#end-cta", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(1.4)" }, 1.75)
+      .fromTo("#end-note", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 2.1);
+
+    window.__timelines["endcard"] = tl;
+  </script>
+</template>

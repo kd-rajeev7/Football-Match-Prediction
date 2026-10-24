@@ -1,0 +1,115 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+    #hook-cam {
+      position: absolute;
+      inset: 0;
+    }
+    .hook-flood {
+      position: absolute;
+      width: 1400px;
+      height: 1400px;
+      border-radius: 50%;
+      background: radial-gradient(
+        circle,
+        rgba(214, 236, 255, 0.34) 0%,
+        rgba(150, 196, 255, 0.12) 30%,
+        rgba(6, 18, 31, 0) 65%
+      );
+    }
+    #hook-flood-l {
+      left: -560px;
+      top: -760px;
+    }
+    #hook-flood-r {
+      right: -560px;
+      top: -760px;
+    }
+    #hook-pitch {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1920px;
+      height: 1080px;
+    }
+    #hook-pitch line,
+    #hook-pitch circle {
+      fill: none;
+      stroke: var(--color-pitch);
+      stroke-width: 6;
+    }
+    #hook-title-wrap {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 380px;
+      text-align: center;
+    }
+    #hook-title {
+      display: inline-block;
+      font-family: var(--font-display);
+      font-size: 220px;
+      line-height: 1;
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
+      color: var(--color-ink);
+    }
+    #hook-bar {
+      position: absolute;
+      left: 660px;
+      top: 625px;
+      width: 600px;
+      height: 14px;
+      background: var(--color-accent);
+      transform-origin: left center;
+    }
+  </style>
+  <div id="root" data-composition-id="hook" data-width="1920" data-height="1080">
+    <div id="hook-cam">
+      <div id="hook-flood-l" class="hook-flood" data-layout-ignore></div>
+      <div id="hook-flood-r" class="hook-flood" data-layout-ignore></div>
+      <svg id="hook-pitch" viewBox="0 0 1920 1080" data-layout-ignore>
+        <line id="hook-halfway" x1="960" y1="-20" x2="960" y2="1100" />
+        <circle id="hook-circle" cx="960" cy="540" r="330" />
+        <circle id="hook-spot" cx="960" cy="540" r="10" style="fill: var(--color-pitch)" />
+      </svg>
+      <div id="hook-title-wrap" class="clip" data-start="0.9" data-duration="2.5">
+        <h1 id="hook-title" data-var-text="hook-line">
+          Who wins tonight?
+        </h1>
+      </div>
+      <div id="hook-bar"></div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const circleLen = 2 * Math.PI * 330;
+
+    // Floodlights switch on: two quick flickers, then full.
+    tl.fromTo(".hook-flood", { opacity: 0.25 }, { opacity: 0.6, duration: 0.06, ease: "none" }, 0.15)
+      .to(".hook-flood", { opacity: 0.1, duration: 0.06, ease: "none" }, 0.24)
+      .to(".hook-flood", { opacity: 1, duration: 0.5, ease: "expo.out" }, 0.36);
+
+    // Pitch markings draw in under the lights.
+    tl.fromTo("#hook-halfway", { attr: { "stroke-dasharray": 1120, "stroke-dashoffset": 1120 } },
+      { attr: { "stroke-dashoffset": 0 }, duration: 0.9, ease: "power2.inOut" }, 0.3)
+      .fromTo("#hook-circle", { attr: { "stroke-dasharray": circleLen, "stroke-dashoffset": circleLen } },
+        { attr: { "stroke-dashoffset": 0 }, duration: 1.0, ease: "power2.inOut" }, 0.45)
+      .fromTo("#hook-spot", { scale: 0, transformOrigin: "50% 50%" },
+        { scale: 1, duration: 0.3, ease: "expo.out" }, 1.2);
+
+    // The question blurs in, then the accent bar underlines it.
+    tl.fromTo("#hook-title", { opacity: 0, filter: "blur(10px)" },
+      { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 0.9)
+      .fromTo("#hook-bar", { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: "expo.out" }, 1.25);
+
+    // Zoom through the centre circle into the app.
+    tl.to("#hook-cam", { scale: 3.4, filter: "blur(14px)", opacity: 0, duration: 0.45, ease: "power3.in", transformOrigin: "50% 50%" }, 2.9);
+
+    window.__timelines["hook"] = tl;
+  </script>
+</template>
