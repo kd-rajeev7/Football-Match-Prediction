@@ -1,0 +1,105 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+    #contact-ground {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 120% 80% at 50% 30%, #1b4fa8 0%, #0e2a78 70%, #0a1f5c 100%);
+    }
+    #contact-logo-card {
+      position: absolute;
+      left: 190px;
+      top: 220px;
+      width: 700px;
+      padding: 40px 60px;
+      border-radius: 44px;
+      background: #ffffff;
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.3);
+    }
+    #contact-logo {
+      width: 580px;
+      display: block;
+    }
+    #contact-line {
+      position: absolute;
+      left: 60px;
+      right: 60px;
+      top: 720px;
+      text-align: center;
+      font-size: 62px;
+      font-weight: 900;
+      line-height: 1.12;
+      color: #ffffff;
+    }
+    #contact-bar {
+      position: absolute;
+      left: 390px;
+      top: 885px;
+      width: 300px;
+      height: 10px;
+      border-radius: 5px;
+      background: var(--color-red);
+      transform-origin: left center;
+    }
+    .contact-row {
+      position: absolute;
+      left: 120px;
+      width: 840px;
+      height: 120px;
+      padding: 0 34px;
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      border-radius: 60px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 2px solid rgba(255, 255, 255, 0.28);
+      color: #ffffff;
+      font-size: 44px;
+      font-weight: 700;
+    }
+    #contact-email { top: 960px; }
+    #contact-phone { top: 1110px; }
+    #contact-place { top: 1260px; }
+    .contact-row svg {
+      flex: none;
+      width: 60px;
+      height: 60px;
+    }
+  </style>
+  <div id="root" data-composition-id="contact" data-width="1080" data-height="1920">
+    <div id="contact-ground"></div>
+    <div id="contact-logo-card"><img id="contact-logo" src="assets/img/logo.png" alt="Christ Trading" /></div>
+    <div id="contact-line">LET'S BUILD GLOBAL<br />TRADE TOGETHER</div>
+    <div id="contact-bar"></div>
+    <div id="contact-email" class="contact-row">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="M3 7l9 6 9-6" /></svg>
+      <span>chiristtrading@gmail.com</span>
+    </div>
+    <div id="contact-phone" class="contact-row">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2" /></svg>
+      <span>+44 7735 695629</span>
+    </div>
+    <div id="contact-place" class="contact-row">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2"><path d="M12 21s-7-6.2-7-11a7 7 0 0114 0c0 4.8-7 11-7 11z" /><circle cx="12" cy="10" r="2.5" /></svg>
+      <span>London, United Kingdom</span>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+
+    // Navy floods in, the logo card lands, then the line and the contacts.
+    tl.fromTo("#contact-ground", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power2.inOut" }, 0)
+      .fromTo("#contact-logo-card", { opacity: 0, y: 60, scale: 0.92 }, { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "expo.out" }, 0.25)
+      .fromTo("#contact-logo", { clipPath: "polygon(0% 100%, 0% 100%, 0% 100%)" },
+        { clipPath: "polygon(0% 100%, 0% -120%, 220% 100%)", duration: 0.7, ease: "power3.out" }, 0.4)
+      .fromTo("#contact-line", { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.22, ease: "power4.out" }, 0.95)
+      .fromTo("#contact-bar", { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: "expo.out" }, 1.15)
+      .fromTo(".contact-row", { x: -900, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, ease: "expo.out", stagger: 0.12 }, 1.3);
+
+    window.__timelines["contact"] = tl;
+  </script>
+</template>

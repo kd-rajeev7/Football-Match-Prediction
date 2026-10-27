@@ -1,0 +1,90 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+    #trade-head {
+      position: absolute;
+      left: 70px;
+      top: 230px;
+      padding: 26px 56px;
+      border-radius: 28px;
+      background: linear-gradient(90deg, #d7262e 0%, #1b4fa8 100%);
+      color: #ffffff;
+      font-size: 64px;
+      font-weight: 900;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+    }
+    .trade-row {
+      position: absolute;
+      left: 70px;
+      width: 940px;
+      height: 242px;
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      border-radius: 32px;
+      background: #ffffff;
+      box-shadow: 0 18px 44px rgba(14, 42, 120, 0.12);
+    }
+    #trade-row0 { top: 450px; }
+    #trade-row1 { top: 720px; }
+    #trade-row2 { top: 990px; }
+    #trade-row3 { top: 1260px; }
+    .trade-icon {
+      width: 104px;
+      height: 104px;
+      object-fit: contain;
+      flex: none;
+    }
+    .trade-title {
+      font-size: 46px;
+      font-weight: 800;
+      line-height: 1.15;
+      color: var(--color-navy);
+    }
+    .trade-sub {
+      margin-top: 6px;
+      font-size: 36px;
+      font-weight: 500;
+      color: #3b4a68;
+    }
+  </style>
+  <div id="root" data-composition-id="trade" data-width="1080" data-height="1920">
+    <div id="trade-head">WHAT WE TRADE</div>
+    <div id="trade-row0" class="trade-row">
+      <img class="trade-icon" src="assets/img/i-agri.png" alt="" />
+      <div class="trade-text"><div class="trade-title">Agricultural Products</div><div class="trade-sub">Grains, pulses &amp; spices</div></div>
+    </div>
+    <div id="trade-row1" class="trade-row">
+      <img class="trade-icon" src="assets/img/i-metal.png" alt="" />
+      <div class="trade-text"><div class="trade-title">Metals &amp; Raw Materials</div></div>
+    </div>
+    <div id="trade-row2" class="trade-row">
+      <img class="trade-icon" src="assets/img/i-energy.png" alt="" />
+      <div class="trade-text"><div class="trade-title">Energy &amp; Fuel Commodities</div></div>
+    </div>
+    <div id="trade-row3" class="trade-row">
+      <img class="trade-icon" src="assets/img/i-food.png" alt="" />
+      <div class="trade-text"><div class="trade-title">Food &amp; Drinks, Fabrics,<br />Handicrafts &amp; More</div></div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+
+    // The header morphs open, then each row lands from the side, one after another.
+    tl.fromTo("#trade-head", { scaleX: 0.2, opacity: 0, transformOrigin: "0% 50%", filter: "blur(12px)" },
+      { scaleX: 1, opacity: 1, filter: "blur(0px)", duration: 0.4, ease: "power3.out" }, 0.05)
+      .fromTo(".trade-row", { x: 1100, opacity: 0, filter: "blur(10px)" },
+        { x: 0, opacity: 1, filter: "blur(0px)", duration: 0.5, ease: "expo.out", stagger: 0.14 }, 0.3);
+
+    // Leave with the next scene's direction.
+    tl.to(["#trade-head", ".trade-row"], { y: -400, opacity: 0, filter: "blur(12px)", duration: 0.3, ease: "power3.in", stagger: 0.02 }, 3.62);
+
+    window.__timelines["trade"] = tl;
+  </script>
+</template>

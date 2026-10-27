@@ -1,0 +1,71 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+    #why-head {
+      position: absolute;
+      left: 70px;
+      top: 230px;
+      padding: 26px 50px;
+      border-radius: 28px;
+      background: linear-gradient(90deg, #1b4fa8 0%, #0e2a78 100%);
+      color: #ffffff;
+      font-size: 58px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+    .why-tile {
+      position: absolute;
+      width: 455px;
+      height: 440px;
+      padding: 40px 30px;
+      border-radius: 36px;
+      background: #ffffff;
+      box-shadow: 0 18px 44px rgba(14, 42, 120, 0.12);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+      text-align: center;
+    }
+    #why-0 { left: 70px; top: 470px; }
+    #why-1 { left: 555px; top: 470px; }
+    #why-2 { left: 70px; top: 940px; }
+    #why-3 { left: 555px; top: 940px; }
+    .why-tile img {
+      width: 150px;
+      height: 150px;
+      object-fit: contain;
+    }
+    .why-tile div {
+      font-size: 44px;
+      font-weight: 800;
+      line-height: 1.15;
+      color: var(--color-navy);
+    }
+  </style>
+  <div id="root" data-composition-id="why" data-width="1080" data-height="1920">
+    <div id="why-head">WHY CHRIST TRADING?</div>
+    <div id="why-0" class="why-tile"><img src="assets/img/w-network.png" alt="" /><div>Reliable Global Network</div></div>
+    <div id="why-1" class="why-tile"><img src="assets/img/w-transparent.png" alt="" /><div>Transparent Operations</div></div>
+    <div id="why-2" class="why-tile"><img src="assets/img/w-quality.png" alt="" /><div>Quality &amp; Compliance Focus</div></div>
+    <div id="why-3" class="why-tile"><img src="assets/img/w-partner.png" alt="" /><div>Long-Term Trade Partnerships</div></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+
+    tl.fromTo("#why-head", { scaleX: 0.2, opacity: 0, transformOrigin: "0% 50%", filter: "blur(12px)" },
+      { scaleX: 1, opacity: 1, filter: "blur(0px)", duration: 0.4, ease: "power3.out" }, 0.05)
+      .fromTo(".why-tile", { y: 500, opacity: 0, filter: "blur(10px)" },
+        { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.55, ease: "expo.out", stagger: 0.12 }, 0.25);
+
+    // Blur swap into the contact card.
+    tl.to(["#why-head", ".why-tile"], { opacity: 0, filter: "blur(12px)", duration: 0.22, ease: "power2.in" }, 2.75);
+
+    window.__timelines["why"] = tl;
+  </script>
+</template>

@@ -1,0 +1,100 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+    #solutions-head {
+      position: absolute;
+      left: 70px;
+      top: 230px;
+      padding: 26px 56px;
+      border-radius: 28px;
+      background: linear-gradient(90deg, #1b4fa8 0%, #0e2a78 100%);
+      color: #ffffff;
+      font-size: 64px;
+      font-weight: 900;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+    }
+    .solutions-row {
+      position: absolute;
+      left: 70px;
+      width: 940px;
+      height: 172px;
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      border-radius: 32px;
+      background: #ffffff;
+      box-shadow: 0 18px 44px rgba(14, 42, 120, 0.12);
+    }
+    #solutions-row0 { top: 400px; }
+    #solutions-row1 { top: 600px; }
+    #solutions-row2 { top: 800px; }
+    #solutions-row3 { top: 1000px; }
+    #solutions-row4 { top: 1200px; }
+    #solutions-row5 { top: 1400px; }
+    .solutions-icon {
+      width: 104px;
+      height: 104px;
+      object-fit: contain;
+      flex: none;
+    }
+    .solutions-title {
+      font-size: 46px;
+      font-weight: 800;
+      line-height: 1.15;
+      color: var(--color-navy);
+    }
+    .solutions-sub {
+      margin-top: 6px;
+      font-size: 36px;
+      font-weight: 500;
+      color: #3b4a68;
+    }
+  </style>
+  <div id="root" data-composition-id="solutions" data-width="1080" data-height="1920">
+    <div id="solutions-head">OUR SOLUTIONS</div>
+    <div id="solutions-row0" class="solutions-row">
+      <img class="solutions-icon" src="assets/img/i-search.png" alt="" />
+      <div class="solutions-text"><div class="solutions-title">Global Sourcing &amp;<br />Supplier Verification</div></div>
+    </div>
+    <div id="solutions-row1" class="solutions-row">
+      <img class="solutions-icon" src="assets/img/i-globe.png" alt="" />
+      <div class="solutions-text"><div class="solutions-title">International Import &amp; Export</div></div>
+    </div>
+    <div id="solutions-row2" class="solutions-row">
+      <img class="solutions-icon" src="assets/img/i-plane.png" alt="" />
+      <div class="solutions-text"><div class="solutions-title">Air Freight &amp; Sea Freight</div></div>
+    </div>
+    <div id="solutions-row3" class="solutions-row">
+      <img class="solutions-icon" src="assets/img/i-truck.png" alt="" />
+      <div class="solutions-text"><div class="solutions-title">Transport, Shipping &amp;<br />Delivery Coordination</div></div>
+    </div>
+    <div id="solutions-row4" class="solutions-row">
+      <img class="solutions-icon" src="assets/img/i-shield.png" alt="" />
+      <div class="solutions-text"><div class="solutions-title">Quality Inspection &amp;<br />Trade Compliance</div></div>
+    </div>
+    <div id="solutions-row5" class="solutions-row">
+      <img class="solutions-icon" src="assets/img/i-doc.png" alt="" />
+      <div class="solutions-text"><div class="solutions-title">Trade Documentation &amp;<br />Certificates</div></div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+
+    // The header morphs open, then each row lands from the side, one after another.
+    tl.fromTo("#solutions-head", { scaleX: 0.2, opacity: 0, transformOrigin: "0% 50%", filter: "blur(12px)" },
+      { scaleX: 1, opacity: 1, filter: "blur(0px)", duration: 0.4, ease: "power3.out" }, 0.05)
+      .fromTo(".solutions-row", { x: -1100, opacity: 0, filter: "blur(10px)" },
+        { x: 0, opacity: 1, filter: "blur(0px)", duration: 0.5, ease: "expo.out", stagger: 0.14 }, 0.3);
+
+    // Leave with the next scene's direction.
+    tl.to(["#solutions-head", ".solutions-row"], { y: -400, opacity: 0, filter: "blur(12px)", duration: 0.3, ease: "power3.in", stagger: 0.02 }, 4.0200000000000005);
+
+    window.__timelines["solutions"] = tl;
+  </script>
+</template>

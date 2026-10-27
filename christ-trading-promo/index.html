@@ -1,0 +1,65 @@
+<!doctype html>
+<html
+  lang="en"
+  data-resolution="portrait"
+  data-composition-variables='[
+    {"id":"color-navy","type":"color","label":"Navy","default":"#0E2A78"},
+    {"id":"color-blue","type":"color","label":"Blue","default":"#1B4FA8"},
+    {"id":"color-red","type":"color","label":"Red","default":"#D7262E"},
+    {"id":"color-sky","type":"color","label":"Sky","default":"#DCEAF8"}
+  ]'
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      :root {
+        --color-navy: #0e2a78;
+        --color-blue: #1b4fa8;
+        --color-red: #d7262e;
+        --color-sky: #dceaf8;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: #f6f9fd;
+      }
+      #root {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        font-family: "Montserrat";
+      }
+      #sky {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(ellipse 130% 70% at 50% 0%, var(--color-sky) 0%, #f6f9fd 100%);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="27" data-width="1080" data-height="1920">
+      <div id="sky"></div>
+      <div id="intro" data-composition-id="intro" data-composition-src="compositions/intro.html" data-start="0" data-duration="4.0" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
+      <div id="world" data-composition-id="world" data-composition-src="compositions/world.html" data-start="4.0" data-duration="3.6" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
+      <div id="trade" data-composition-id="trade" data-composition-src="compositions/trade.html" data-start="7.6" data-duration="4.0" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
+      <div id="solutions" data-composition-id="solutions" data-composition-src="compositions/solutions.html" data-start="11.6" data-duration="4.4" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
+      <div id="how" data-composition-id="how" data-composition-src="compositions/how.html" data-start="16.0" data-duration="3.6" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
+      <div id="why" data-composition-id="why" data-composition-src="compositions/why.html" data-start="19.6" data-duration="3.0" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
+      <div id="contact" data-composition-id="contact" data-composition-src="compositions/contact.html" data-start="22.6" data-duration="4.4" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
+      <audio id="soundtrack" class="clip" src="assets/audio/soundtrack.wav" data-start="0" data-duration="27" data-track-index="2" data-volume="1"></audio>
+    </div>
+    <script>
+      window.__timelines["main"] = gsap.timeline({ paused: true });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,96 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+    #how-head {
+      position: absolute;
+      left: 70px;
+      top: 230px;
+      padding: 26px 56px;
+      border-radius: 28px;
+      background: linear-gradient(90deg, #d7262e 0%, #1b4fa8 100%);
+      color: #ffffff;
+      font-size: 64px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+    #how-line {
+      position: absolute;
+      left: 163px;
+      top: 560px;
+      width: 10px;
+      height: 780px;
+      border-radius: 5px;
+      background: #c9d6ec;
+      overflow: hidden;
+    }
+    #how-line-fill {
+      position: absolute;
+      inset: 0;
+      background: var(--color-blue);
+      transform-origin: 50% 0%;
+    }
+    .how-step {
+      position: absolute;
+      left: 110px;
+      width: 900px;
+      display: flex;
+      align-items: center;
+      gap: 44px;
+    }
+    #how-step0 { top: 500px; }
+    #how-step1 { top: 760px; }
+    #how-step2 { top: 1020px; }
+    #how-step3 { top: 1280px; }
+    .how-num {
+      flex: none;
+      width: 116px;
+      height: 116px;
+      border-radius: 50%;
+      background: var(--color-navy);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 56px;
+      font-weight: 900;
+      box-shadow: 0 0 0 10px #f6f9fd;
+    }
+    .how-label {
+      font-size: 50px;
+      font-weight: 800;
+      line-height: 1.15;
+      color: var(--color-navy);
+    }
+  </style>
+  <div id="root" data-composition-id="how" data-width="1080" data-height="1920">
+    <div id="how-head">HOW WE WORK</div>
+    <div id="how-line"><div id="how-line-fill"></div></div>
+    <div id="how-step0" class="how-step"><div class="how-num">1</div><div class="how-label">Share Your Requirements</div></div>
+    <div id="how-step1" class="how-step"><div class="how-num">2</div><div class="how-label">Source &amp; Verify Suppliers</div></div>
+    <div id="how-step2" class="how-step"><div class="how-num">3</div><div class="how-label">Coordinate Freight &amp;<br />Documentation</div></div>
+    <div id="how-step3" class="how-step"><div class="how-num">4</div><div class="how-label">Deliver Across Borders</div></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+
+    tl.fromTo("#how-head", { scaleX: 0.2, opacity: 0, transformOrigin: "0% 50%", filter: "blur(12px)" },
+      { scaleX: 1, opacity: 1, filter: "blur(0px)", duration: 0.4, ease: "power3.out" }, 0.05)
+      .fromTo("#how-line", { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "power2.out" }, 0.3)
+      .fromTo("#how-line-fill", { scaleY: 0 }, { scaleY: 1, duration: 2.1, ease: "power1.inOut" }, 0.4);
+
+    // The line travels down; each step lights up as it arrives.
+    [0, 1, 2, 3].forEach((i) => {
+      const at = 0.4 + i * 0.62;
+      tl.fromTo(`#how-step${i} .how-num`, { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.45, ease: "back.out(1.6)" }, at)
+        .fromTo(`#how-step${i} .how-label`, { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, at + 0.12);
+    });
+
+    tl.to(["#how-head", "#how-line", ".how-step"], { y: -400, opacity: 0, filter: "blur(12px)", duration: 0.3, ease: "power3.in", stagger: 0.02 }, 3.22);
+
+    window.__timelines["how"] = tl;
+  </script>
+</template>

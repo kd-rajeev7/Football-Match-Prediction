@@ -1,0 +1,86 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+    #intro-logo {
+      position: absolute;
+      left: 250px;
+      top: 330px;
+      width: 580px;
+      display: block;
+    }
+    #intro-head {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 740px;
+      text-align: center;
+      font-weight: 900;
+      font-size: 96px;
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      color: var(--color-navy);
+    }
+    .intro-word {
+      display: inline-block;
+    }
+    #intro-amp {
+      color: var(--color-red);
+    }
+    #intro-sub {
+      position: absolute;
+      left: 90px;
+      right: 90px;
+      top: 1200px;
+      text-align: center;
+      font-size: 44px;
+      font-weight: 500;
+      line-height: 1.3;
+      color: #23324f;
+    }
+    #intro-bar {
+      position: absolute;
+      left: 390px;
+      top: 1365px;
+      width: 300px;
+      height: 10px;
+      border-radius: 5px;
+      background: var(--color-red);
+      transform-origin: left center;
+    }
+  </style>
+  <div id="root" data-composition-id="intro" data-width="1080" data-height="1920">
+    <img id="intro-logo" src="assets/img/logo.png" alt="Christ Trading" />
+    <div id="intro-head">
+      <span class="intro-word">GLOBAL</span><br />
+      <span class="intro-word">COMMODITIES</span><br />
+      <span class="intro-word">TRADING</span> <span id="intro-amp" class="intro-word">&amp;</span><br />
+      <span class="intro-word">LOGISTICS</span>
+    </div>
+    <div id="intro-sub">Connecting suppliers, buyers and markets worldwide</div>
+    <div id="intro-bar"></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+
+    // The logo is drawn on along its rising arrow: bottom-left to top-right.
+    tl.fromTo("#intro-logo", { clipPath: "polygon(0% 100%, 0% 100%, 0% 100%)", scale: 0.94 },
+      { clipPath: "polygon(0% 100%, 0% -120%, 220% 100%)", scale: 1, duration: 0.8, ease: "power3.out" }, 0.1);
+
+    // Headline per word, blur to sharp.
+    tl.fromTo(".intro-word", { opacity: 0, filter: "blur(8px)" },
+      { opacity: 1, filter: "blur(0px)", duration: 0.16, ease: "power4.out", stagger: 0.08 }, 0.9);
+
+    tl.fromTo("#intro-sub", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 1.5)
+      .fromTo("#intro-bar", { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: "expo.out" }, 1.7);
+
+    // Everything lifts away as the world rises in.
+    tl.to(["#intro-logo", "#intro-head", "#intro-sub", "#intro-bar"],
+      { y: -260, opacity: 0, filter: "blur(10px)", duration: 0.4, ease: "power3.in", stagger: 0.03 }, 3.55);
+
+    window.__timelines["intro"] = tl;
+  </script>
+</template>

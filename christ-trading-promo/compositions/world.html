@@ -1,0 +1,75 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+    #world-window {
+      position: absolute;
+      left: 0;
+      top: 470px;
+      width: 1080px;
+      height: 980px;
+      overflow: hidden;
+    }
+    #world-pan {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 2928px;
+      height: 980px;
+      display: block;
+    }
+    .world-tag {
+      position: absolute;
+      left: 0;
+      right: 0;
+      text-align: center;
+    }
+    .world-tag span {
+      display: inline-block;
+      padding: 18px 40px;
+      border-radius: 999px;
+      font-size: 46px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+    #world-tag-top {
+      top: 300px;
+    }
+    #world-tag-top span {
+      background: var(--color-navy);
+    }
+    #world-tag-bottom {
+      top: 1520px;
+    }
+    #world-tag-bottom span {
+      background: var(--color-red);
+    }
+  </style>
+  <div id="root" data-composition-id="world" data-width="1080" data-height="1920">
+    <div id="world-window" data-layout-allow-overflow>
+      <img id="world-pan" src="assets/img/hero.png" alt="Container ship, cargo plane and port" />
+    </div>
+    <div id="world-tag-top" class="world-tag"><span>Air Freight &amp; Sea Freight</span></div>
+    <div id="world-tag-bottom" class="world-tag"><span>International Import &amp; Export</span></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+
+    // The window rises in from the intro, then the camera travels ship → plane → port.
+    tl.fromTo("#world-window", { y: 700, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55, ease: "expo.out" }, 0)
+      .fromTo("#world-pan", { x: 0 }, { x: -1848, duration: 3.3, ease: "power2.inOut" }, 0.1);
+
+    tl.fromTo("#world-tag-top span", { opacity: 0, scaleX: 0.3, filter: "blur(10px)" },
+      { opacity: 1, scaleX: 1, filter: "blur(0px)", duration: 0.3, ease: "power3.out" }, 0.45)
+      .fromTo("#world-tag-bottom span", { opacity: 0, scaleX: 0.3, filter: "blur(10px)" },
+        { opacity: 1, scaleX: 1, filter: "blur(0px)", duration: 0.3, ease: "power3.out" }, 1.4);
+
+    // Whip left into the trade list.
+    tl.to(["#world-window", ".world-tag"], { x: -1100, filter: "blur(14px)", duration: 0.3, ease: "power3.in" }, 3.3);
+
+    window.__timelines["world"] = tl;
+  </script>
+</template>
