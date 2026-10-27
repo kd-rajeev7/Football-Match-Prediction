@@ -1,0 +1,53 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+    /* Same white as the logo file, so the logo sits in the frame with no visible edge. */
+    #end-paper {
+      position: absolute;
+      inset: 0;
+      background: #fefefe;
+    }
+    #end-logo {
+      position: absolute;
+      left: 120px;
+      top: 330px;
+      width: 840px;
+      height: 840px;
+      display: block;
+    }
+    #end-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 1150px;
+      text-align: center;
+      font-family: "EB Garamond";
+      font-size: 64px;
+      font-style: italic;
+      color: #5b3f2e;
+    }
+  </style>
+  <div id="root" data-composition-id="endcard" data-width="1080" data-height="1920">
+    <div id="end-paper"></div>
+    <img id="end-logo" src="assets/brand/cafe-mero-logo.webp" alt="Cafe Mero" />
+    <div id="end-line">Good Coffee. Great Company.</div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+
+    // The hero cup dissolves into clean paper.
+    tl.fromTo("#end-paper", { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "power2.inOut" }, 0);
+
+    // The logo fades up untouched: opacity and a short rise only, never scaled or blurred.
+    tl.fromTo("#end-logo", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 0.35);
+
+    // The closing line follows.
+    tl.fromTo("#end-line", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 1.05);
+
+    window.__timelines["endcard"] = tl;
+  </script>
+</template>
